@@ -1366,37 +1366,141 @@ Output: an object containing:
 
 //SOLUTION
 /*
-const cart = [
+const eStore = [
   { name: "phone", price: 300, category: "electronics" },
   { name: "Jean", price: 120, category: "clothing" },
   { name: "Pineapple", price: 20, category: "food" },
 ];
 
 const checkout = function (cart) {
-  let subTotal = 0;
+  let subtotal = 0;
+  let shippingFee = 0;
+  let discountedAmount = 0;
+  let giftWrap = 0;
+  let total = 0;
   let hasElectronics = false;
-  // let discountedAmount = 0;
-  // let shippingFee = 0;
-  // let giftWrapFee = 0;
-  // let total = subTotal - discountedAmount + shippingFee + giftWrapFee;
 
   for (let i = 0; i < cart.length; i++) {
-    subTotal += cart[i].price;
+    subtotal += cart[i].price;
 
     if (cart[i].category === "electronics") {
       hasElectronics = true;
     }
   }
 
-  let 
+  if (hasElectronics) {
+    shippingFee = 5;
+  }
+
+  if (subtotal > 100) {
+    discountedAmount = subtotal * 0.1;
+  }
+
+  if (cart.length >= 3) {
+    giftWrap = 2;
+  }
+
+  total = subtotal - discountedAmount + shippingFee + giftWrap;
+  // console.log(subtotal);
+
   return {
-    subTotal: subTotal,
+    subtotal: subtotal,
     discountedAmount: discountedAmount,
     shippingFee: shippingFee,
-    giftWrapFee: giftWrapFee,
+    giftWrap: giftWrap,
     total: total,
   };
 };
 
-console.log(checkout(cart));
+console.log(checkout(eStore));
+*/
+
+//Using AI
+
+/*
+Let's say you're building a time tracking application for freelancers. At some point in building the app, you need a function that recieves daily work hours for a certain week, and returns:
+1. Total hours worked
+2. Average daily hours
+3. The day with the most hours worked
+4. Whether the week was full-time (worked 35 hours or more)
+
+TEST DATA: [7.5, 8, 6.5, 0, 8.5, 4, 0]
+*/
+
+//SOLUTION
+/*
+const workHours = [7.5, 8, 6.5, 0, 8.5, 4, 0];
+
+const analyzeWorkWeek = function (hours) {
+  let totalHours = 0;
+  let maxHours = 0;
+  let busiestDay = 1; // Start with the first day as the busiest
+  for (let i = 0; i < hours.length; i++) {
+    totalHours += hours[i];
+
+    if (hours[i] > maxHours) {
+      maxHours = hours[i];
+      busiestDay = i + 1; // Update the day with the most hours worked
+    }
+  }
+  let averageHours = Math.round((totalHours / hours.length) * 10) / 10; // Round to 1 decimal place
+
+  return {
+    totalHours: totalHours,
+    averageHours: averageHours,
+    maxHours: maxHours,
+    busiestDay: `${busiestDay === 1 ? "Monday" : busiestDay === 2 ? "Tuesday" : busiestDay === 3 ? "Wednesday" : busiestDay === 4 ? "Thursday" : busiestDay === 5 ? "Friday" : busiestDay === 6 ? "Saturday" : "Sunday"}`,
+    isFullTime: totalHours >= 35,
+  };
+};
+
+console.log(analyzeWorkWeek(workHours));
+*/
+
+/*
+- CHALLENGE
+Write a function called analyzeScores that receives an array of student test scores and returns an object with:
+
+1. Total number of students
+2. Average score (rounded to one decimal place)
+3. The highest score
+4. Which student number got the highest score (e.g. "Student 3")
+5. Whether the class passed overall (average score of 50 or above)
+
+TEST DATA: [45, 78, 92, 36, 88, 55, 71]
+*/
+
+//SOLUTION
+/*
+const scores = [45, 78, 92, 36, 88, 55, 71];
+const analyzeScores = function (scores) {
+  let totalStudents = scores.length;
+  let totalScore = 0;
+  let averageScore = 0;
+  let maxScore = 0;
+  let eliteStudent = 1;
+
+  for (let i = 0; i < scores.length; i++) {
+    totalScore += scores[i];
+
+    if (scores[i] > maxScore) {
+      maxScore = scores[i];
+      eliteStudent = i + 1;
+    }
+  }
+  // console.log(totalStudents);
+  // console.log(totalScore);
+  averageScore = Math.round((totalScore / scores.length) * 10) / 10;
+  // console.log(averageScore);
+
+  return {
+    totalStudents: totalStudents,
+    averageScore: averageScore,
+    highestScore: maxScore,
+    eliteStudent: `Student ${eliteStudent}`,
+    overall: averageScore >= 50 ? "pass" : "fail",
+  };
+};
+
+console.log(analyzeScores(scores));
 */
