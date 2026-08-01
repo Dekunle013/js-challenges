@@ -2247,6 +2247,7 @@ console.log(processBooks(books, getAvailability));
 console.log(processBooks(books, createCard));
 */
 
+/*
 const books = [
   {
     title: "1984",
@@ -2317,3 +2318,112 @@ const processBooks = function (books, callback) {
 console.log(processBooks(books, applyLateFee));
 console.log(processBooks(books, getAvailability));
 console.log(processBooks(books, createCard));
+*/
+
+//-----------------------------------------------------
+
+// 🍔 CHALLENGE: Food Delivery App
+// Write three callback functions:
+
+// 1. calculateTotal
+//    - deliveryFee: $3.99 if distance > 3 miles, else $2.99
+//    - tax: 8% of subtotal
+//    - total = subtotal + deliveryFee + tax
+//    - Return a NEW object with all original properties PLUS a 'total' property
+//    - Round total to 2 decimal places
+
+// 2. deliveryTime
+//    - "Early" if estimatedTime < 30 mins
+//    - "On Time" if 30-45 mins
+//    - "Late" if > 45 mins
+
+// 3. formatReceipt
+//    - Format: "🍕 Pizza Palace (2 items) - $21.75 | ETA: 25 mins"
+//    - Use the restaurant name, items count, total, and estimatedTime
+//    - HINT: You'll need to calculate the total first!
+
+// 4. Processor function
+//    const processDeliveries = function (deliveries, callback) {
+//      // Your loop here
+//    };
+
+// 5. Test all three with console.log()
+
+const deliveries = [
+  {
+    id: 101,
+    restaurant: "Pizza Palace",
+    items: 2,
+    subtotal: 18.5,
+    distance: 4.2,
+    estimatedTime: 25,
+  },
+  {
+    id: 102,
+    restaurant: "Burger Joint",
+    items: 3,
+    subtotal: 27.3,
+    distance: 2.1,
+    estimatedTime: 35,
+  },
+  {
+    id: 103,
+    restaurant: "Sushi Spot",
+    items: 1,
+    subtotal: 14.75,
+    distance: 5.8,
+    estimatedTime: 50,
+  },
+  {
+    id: 104,
+    restaurant: "Taco Truck",
+    items: 4,
+    subtotal: 22.0,
+    distance: 1.5,
+    estimatedTime: 20,
+  },
+];
+
+const restaurantEmojis = {
+  "Pizza Palace": "🍕",
+  "Burger Joint": "🍔",
+  "Sushi Spot": "🍣",
+  "Taco Truck": "🌮",
+};
+
+const calculateTotal = (delivery) => {
+  const deliveryFee = delivery.distance > 3 ? 3.99 : 2.99;
+
+  const tax = delivery.subtotal * 0.08;
+
+  const total = Number((delivery.subtotal + deliveryFee + tax).toFixed(2));
+  return { ...delivery, total };
+};
+
+const deliveryTime = (delivery) => {
+  return delivery.estimatedTime < 30
+    ? "Early"
+    : delivery.estimatedTime < 45
+      ? "On Time"
+      : "Late";
+};
+
+const formatReceipt = (delivery) => {
+  const { total } = calculateTotal(delivery);
+
+  const emoji = restaurantEmojis[delivery.restaurant] || "🍽️";
+
+  return `${emoji} ${delivery.restaurant} (${delivery.items} items) - $${total.toFixed(2)} | ETA: ${delivery.estimatedTime} mins`;
+};
+
+const processDeliveries = function (deliveries, callback) {
+  const report = [];
+  for (const delivery of deliveries) {
+    report.push(callback(delivery));
+  }
+  return report;
+};
+
+console.log(processDeliveries(deliveries, calculateTotal));
+console.log(processDeliveries(deliveries, deliveryTime));
+console.log(processDeliveries(deliveries, formatReceipt));
