@@ -1504,3 +1504,829 @@ const analyzeScores = function (scores) {
 
 console.log(analyzeScores(scores));
 */
+
+/*
+PROBLEM: Employee Shift Bonus Calculator
+
+A restaurant wants to calculate weekly pay with bonuses. Write calculatePay(employee):
+
+Input: an object with:
+{
+  name: "Sarah",
+  hourlyRate: 15,
+  hoursWorked: [8, 7, 9, 8, 10, 5, 0],  // Mon to Sun
+  role: "chef"  // or "waiter"
+}
+
+Rules:
+
+1. Base pay = hourlyRate × total hours
+
+2. If any day > 10 hours → add $50 bonus (once, not per day)
+
+3. If role is "chef" → multiply base pay by 1.2 (20% skill bonus) before adding other bonuses
+
+4. If employee worked 7 days (no zeros) → add $30 perfect attendance bonus
+
+Output:
+{
+  name: "Sarah",
+  basePay: 705,        // after role multiplier but before other bonuses
+  overtimeBonus: 50,   // or 0
+  attendanceBonus: 30, // or 0
+  total: 785
+}
+*/
+/*
+const users = [
+  {
+    name: "Dekunle",
+    address: {
+      city: "Lagos",
+      zip: "100001",
+    },
+    job: {
+      title: "Developer",
+      company: "Tech Corp",
+    },
+  },
+  {
+    name: "John",
+    job: {
+      title: "Designer",
+      company: "Creative Co",
+    },
+  },
+];
+
+console.log(users[0].address.city);
+console.log(users[1].address?.zip);
+console.log(users[1].address?.zip ?? "Zip code doesn't exist");
+*/
+
+/*
+const player = {
+  name: "Lewandowski",
+  club: "Bayern Munich",
+  goals: 35,
+  assists: 10,
+  nationality: "Polish",
+};
+
+const property = Object.keys(player);
+console.log(property);
+
+const value = Object.values(player);
+console.log(value);
+
+const entrie = Object.entries(player);
+for (const [props, val] of entrie) {
+  console.log(`${props}: ${val}`);
+}
+
+const lengthProps = property.length;
+console.log(lengthProps);
+*/
+
+/*
+// CHALLENGE
+const employees = {
+  engineering: {
+    manager: "Sarah",
+    developers: ["Dekunle", "John", "Ali"],
+    avgSalary: 95000,
+  },
+  design: {
+    manager: "Mike",
+    developers: ["Joy", "Sam"],
+    avgSalary: 75000,
+  },
+  marketing: {
+    manager: "Lisa",
+    developers: ["Chris", "Paula", "Mo", "Dave"],
+    avgSalary: 65000,
+  },
+};
+
+// # Your tasks:
+
+// - Using Object.entries and a loop, log each department name and its manager in this format: "Engineering is managed by Sarah"
+// - Using Object.entries, find and log the department with the highest average salary
+// - Using Object.values, calculate and log the total number of developers across all departments
+// - Using Object.entries and destructuring, log each developer's name alongside their department in this format: "Dekunle works in Engineering"
+// - Using Object.keys, log the number of departments that have more than 2 developers
+
+// 1
+for (const [department, { manager }] of Object.entries(employees)) {
+  console.log(
+    `${department[0].toUpperCase() + department.slice(1)} is managed by ${manager}`,
+  );
+}
+
+// 2
+const data = Object.entries(employees);
+let averageSalary = 0;
+let mostPaidDept = "";
+for (const [department, { avgSalary }] of data) {
+  if (avgSalary > averageSalary) {
+    averageSalary = avgSalary;
+    mostPaidDept = department;
+  }
+}
+console.log(
+  `The department with the highest avergage salary(${averageSalary}) is ${mostPaidDept[0].toUpperCase() + mostPaidDept.slice(1)}`,
+);
+
+// 3
+let staffSum = 0;
+for (const { developers } of Object.values(employees)) {
+  staffSum += developers.length;
+}
+console.log(`The number of staffs across all departments is ${staffSum}`);
+
+// 4
+for (const [department, { developers }] of Object.entries(employees)) {
+  for (const developer of developers) {
+    console.log(
+      `${developer} works in ${department[0].toUpperCase() + department.slice(1)} department`,
+    );
+  }
+}
+
+// 5
+let count = 0;
+for (const [department, { developers }] of Object.entries(employees)) {
+  if (developers.length > 2) {
+    count++;
+  }
+}
+console.log(`${count} departments has more than 2 developers`);
+*/
+
+/*
+// CHALLENGE
+const company = {
+  name: "TechCorp",
+  founded: 2010,
+  departments: {
+    engineering: {
+      head: "Alice",
+      team: ["Bob", "Charlie", "Diana", "Eve"],
+      budget: 500000,
+    },
+    design: {
+      head: "Frank",
+      team: ["Grace", "Henry"],
+      budget: 200000,
+    },
+    marketing: {
+      head: "Iris",
+      team: ["Jack", "Karl", "Leo"],
+      budget: 350000,
+    },
+  },
+};
+
+// # Your tasks:
+
+// - Destructure name and founded from company
+// - Destructure the head of the engineering department in one line
+// - Using Object.entries, log each department name and its head: "Engineering is headed by Alice"
+// - Find the department with the lowest budget and log it
+// - Log the total budget across all departments
+// - Log every team member across all departments in this format: "Bob is in Engineering"
+
+// 1
+const { name, founded } = company;
+console.log(name, founded);
+
+// 2
+const {
+  engineering: { head },
+} = company.departments;
+console.log(head);
+
+// 3
+for (const [department, { head }] of Object.entries(company.departments)) {
+  console.log(
+    `${department[0].toUpperCase() + department.slice(1)} is headed by ${head}`,
+  );
+}
+
+// 4
+let minBudget = Infinity;
+let lowBudgetDept = "";
+for (const [department, { budget }] of Object.entries(company.departments)) {
+  if (budget < minBudget) {
+    minBudget = budget;
+    lowBudgetDept = department;
+  }
+}
+console.log(
+  `${lowBudgetDept[0].toUpperCase() + lowBudgetDept.slice(1)} has the lowest budget: $${minBudget}`,
+);
+
+// 5
+let totalBudget = 0;
+for (const [department, { budget }] of Object.entries(company.departments)) {
+  totalBudget += budget;
+}
+console.log(`The total budget across all departments is $${totalBudget}`);
+
+// 6
+for (const [department, { team }] of Object.entries(company.departments)) {
+  // for (const teamMembers of Object.values(team)) {
+  for (const teamMembers of team) {
+    console.log(
+      `${teamMembers} is in ${department[0].toUpperCase() + department.slice(1)}`,
+    );
+  }
+}
+
+*/
+
+// const storeData = {
+//   store: {
+//     name: "Mega Mart",
+//     location: {
+//       address: "123 Main St",
+//       city: "Springfield",
+//       zip: "12345",
+//     },
+//     inventory: {
+//       electronics: [
+//         {
+//           id: 1,
+//           name: "Laptop",
+//           price: 999,
+//           specs: { ram: "16GB", storage: "512GB" },
+//         },
+//         {
+//           id: 2,
+//           name: "Phone",
+//           price: 699,
+//           specs: { ram: "8GB", storage: "256GB" },
+//         },
+//       ],
+//       clothing: [{ id: 3, name: "T-Shirt", price: 20, sizes: ["S", "M", "L"] }],
+//     },
+//   },
+// };
+
+// const { store } = storeData;
+
+//////////////////////////////////
+// STRING EXERCISE
+/*
+Coding Challenge #4
+Write a program that receives a list of variable names written in underscore_case 
+and convert them to camelCase.
+The input will come from a textarea inserted into the DOM (see code below to 
+insert the elements), and conversion will happen when the button is pressed.
+Test data (pasted to textarea, including spaces):
+underscore_case
+first_name
+Some_Variable 
+ calculate_AGE
+delayed_departure
+Should produce this output (5 separate console.log outputs):
+underscoreCase ✅
+firstName ✅✅
+someVariable ✅✅✅
+calculateAge ✅✅✅✅
+delayedDeparture ✅✅✅✅✅
+Hints:
+§ Remember which line defines a new line in the textarea �
+§ The solution only needs to work for a variable made out of 2 words, like a_b
+§ Start without worrying about the ✅. Tackle that only after you have the variable 
+name conversion working �
+§ This challenge is difficult on purpose, so start watching the solution in case 
+you're stuck. Then pause and continue!
+Afterwards, test with your own test data!
+GOOD LUCK �   
+*/
+
+/*
+document.body.append(document.createElement("textarea"));
+document.body.append(document.createElement("button"));
+
+const text = document.querySelector("textarea");
+const btn = document.querySelector("button");
+
+btn.addEventListener("click", function () {
+  const textLower = text.value.toLowerCase().trim().split("\n");
+
+  for (const [i, line] of textLower.entries()) {
+    const trimmedLine = line.trim();
+    if (!trimmedLine) continue;
+
+    const [first, second] = trimmedLine.split("_");
+    const camelCase = first + second[0].toUpperCase() + second.slice(1);
+
+    const checkmarks = "✅".repeat(i + 1);
+    console.log(`${camelCase.padEnd(20)} ${checkmarks}`);
+  }
+});
+*/
+
+// Given this:
+// const name = "first_name";
+// const [a, b] = name.split("_");
+// console.log(a + b[0].toUpperCase() + b.slice(1));
+
+/*
+REAL WORLD SCENARIO: User Registration Form
+You're building a signup form where users enter their full name, and you need to automatically generate their username.
+
+The Problem: Users type names in all sorts of ways:
+
+"john doe"
+"JANE SMITH"
+" robert johnson "
+"mary-ann williams"
+
+# Your Job: Create a username generator that:
+- Takes their full name
+- Converts to lowercase
+- Removes extra spaces
+- Creates firstname.lastname@company.com
+*/
+/*
+// Solution
+const generateUsername = function (name) {
+  const user = name.toLowerCase().trim().split(/\s+/);
+  const [firstName, lastName] = user;
+  // return `a: ${a} b: ${b}`;
+  // return `${firstName}.${lastName}@company.com`; //option 1
+  return `${firstName}` + "." + `${lastName}` + "@company.com"; // option 2
+};
+console.log(generateUsername("john doe")); // → "john.doe@company.com"
+console.log(generateUsername("JANE SMITH")); // → "jane.smith@company.com"
+console.log(generateUsername("  robert  johnson  ")); // → "robert.johnson@company.com"
+
+const name = "  mary_ann  smith  ";
+const cleaned = name.trim().split(/\s+/).join(" ").split("_").join(".");
+console.log(cleaned);
+*/
+
+//String Method Practice
+/*
+const flights =
+  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//               Arrival from BRU to FAO (11h45
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+const getCode = (str) => str.slice(0, 3).toUpperCase();
+
+const flightSPlit = flights.split("+");
+for (const flight of flightSPlit) {
+  const [type, from, to, time] = flight.split(";");
+  const output =
+    `${type.includes("Delayed") ? "🔴" : ""}${type.replaceAll("_", " ")} from ${getCode(from)} to ${getCode(to)} (${time.replace(":", "h")})`.padStart(
+      44,
+    );
+  console.log(output);
+}
+*/
+
+//------------------------------------------------------------
+/*
+You're building a simple data processor. Write a function called processData that takes an array of numbers and a callback function, applies the callback to each number, and returns a new array of results.
+
+Then write three separate callback functions:
+
+i. double — multiplies a number by 2
+ii. square — returns a number squared (n * n)
+iii. isEven — returns "Even" if the number is even, "Odd" otherwise
+
+Test all three:
+processData([1, 2, 3, 4, 5], double);
+processData([1, 2, 3, 4, 5], square);
+processData([1, 2, 3, 4, 5], isEven);
+
+Expected outputs:
+[2, 4, 6, 8, 10]
+[1, 4, 9, 16, 25]
+['Odd', 'Even', 'Odd', 'Even', 'Odd']
+ */
+
+// SOLUTION
+/*
+const double = (n) => {
+  return n + n;
+};
+
+const square = (n) => {
+  return n * n;
+};
+
+const isEven = (n) => {
+  return n % 2 === 0 ? "Even" : "Odd";
+};
+
+const processData = function (arr, fn) {
+  const result = [];
+  for (const num of arr) {
+    result.push(fn(num));
+  }
+  return result;
+};
+
+console.log(processData([1, 2, 3, 4, 5], double));
+console.log(processData([1, 2, 3, 4, 5], square));
+console.log(processData([1, 2, 3, 4, 5], isEven));
+*/
+
+//------------------------------------------------------------
+/*
+You're building a gradebook system. Write a function called processStudents that takes an array of student objects and a callback function, applies the callback to each student, and returns a new array of results.
+
+Write three callback functions:
+
+getGrade — returns "Pass" if score is 50 or above, "Fail" otherwise
+addBonus — returns a new object with the student's name and score increased by 10
+formatResult — returns a string like "Dekunle scored 72"
+
+Test all three:
+
+console.log(processStudents(students, getGrade));
+console.log(processStudents(students, addBonus));
+console.log(processStudents(students, formatResult));
+*/
+/*
+const students = [
+  { name: "Dekunle", score: 72 },
+  { name: "Ali", score: 45 },
+  { name: "Joy", score: 88 },
+  { name: "Sam", score: 55 },
+  { name: "Mo", score: 91 },
+];
+
+const getGrade = (student) => {
+  return student.score >= 50 ? "Pass" : "Fail";
+};
+
+const addBonus = (student) => {
+  return { name: student.name, score: student.score + 10 };
+};
+
+const formatResult = (student) => {
+  return `${student.name} scored ${student.score}`;
+};
+
+const processStudents = function (students, callBack) {
+  let result = [];
+  for (const individual of students) {
+    result.push(callBack(individual));
+  }
+  return result;
+};
+
+console.log(processStudents(students, getGrade));
+console.log(processStudents(students, addBonus));
+console.log(processStudents(students, formatResult));
+*/
+
+//------------------------------------------------------------
+
+/*
+E-Commerce Order Processor 🛒
+You're building an order processing system. Write a function processOrders that takes an array of order objects and a callback, applies the callback to each order, and returns a new array.
+
+Write three callback functions:
+
+1) applyDiscount - applies a 15% discount to the order total (round to 2 decimal places).
+2) getStatus - returns "Express" if total > $100, "Standard" otherwise.
+3)formatOrder - returns a string like "Order #A001: $47.99".
+*/
+
+/*
+const orders = [
+  { id: "A001", item: "Laptop", total: 999.99 },
+  { id: "B002", item: "Mouse", total: 24.5 },
+  { id: "C003", item: "Monitor", total: 199.99 },
+  { id: "D004", item: "Keyboard", total: 45.75 },
+];
+
+const applyDiscount = (order) => {
+  //  return { 
+  //   ...order, // Spread operator to copy all properties
+  //   total: Number((order.total * 0.85).toFixed(2))
+  // };
+  return {
+    id: order.id,
+    item: order.item,
+    total: (order.total * 0.85).toFixed(2),
+  };
+};
+
+const getStatus = (order) => {
+  return order.total > 100 ? "Express" : "Standard";
+};
+
+const formatOrder = (order) => {
+  return `Order #${order.id}: $${order.total}`;
+};
+console.log(formatOrder({ id: "A001", item: "Laptop", total: 999.99 }));
+
+const processOrders = function (orders, callBack) {
+  const result = [];
+  for (const order of orders) {
+    result.push(callBack(order));
+  }
+  return result;
+};
+
+console.log(processOrders(orders, applyDiscount));
+console.log(processOrders(orders, getStatus));
+console.log(processOrders(orders, formatOrder));
+*/
+
+//------------------------------------------------------------
+
+/*
+You're building a task management app. Write processTasks that takes an array of task objects and a callback.
+
+Write three callback functions:
+
+1) isOverdue - returns true if the task's due date is in the past (compare with today's date)
+
+2) getPriority - returns "High" if days until due is less than 3, "Medium" if 3-7 days, "Low" otherwise
+
+3) createReminder - returns a string like "📌 Submit report - Due in 2 days"
+*/
+
+/*
+const tasks = [
+  { id: 1, title: "Submit report", dueDate: "2026-08-02" },
+  { id: 2, title: "Review code", dueDate: "2026-08-15" },
+  { id: 3, title: "Team meeting", dueDate: "2026-07-25" },
+  { id: 4, title: "Update docs", dueDate: "2026-08-10" },
+];
+
+const today = new Date();
+
+const isOverdue = (task) => {
+  const due = new Date(task.dueDate);
+  return due < today;
+};
+
+const getPriority = (task) => {
+  const due = new Date(task.dueDate);
+  const daysUntil = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+
+  if (daysUntil < 3) {
+    return "High";
+  } else if (daysUntil <= 7) {
+    return "Medium";
+  } else {
+    return "Low";
+  }
+};
+
+const createReminder = (task) => {
+  const due = new Date(task.dueDate);
+  const daysUntil = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+
+  if (daysUntil < 0) {
+    return `📌 ${task.title} - OVERDUE by ${Math.abs(daysUntil)} days`;
+  } else if (daysUntil === 0) {
+    return `📌 ${task.title} - Due TODAY!`;
+  } else {
+    return `📌 ${task.title} - Due in ${daysUntil} days`;
+  }
+};
+
+const processTask = function (tasks, callBack) {
+  const result = [];
+  for (const task of tasks) {
+    result.push(callBack(task));
+  }
+  return result;
+};
+
+console.log(processTask(tasks, isOverdue));
+console.log(processTask(tasks, getPriority));
+console.log(processTask(tasks, createReminder));
+*/
+
+//------------------------------------------------
+
+/*
+Challenge 3: Employee Salary Manager 💼
+You're processing employee records. Write processEmployees that takes an array of employee objects and a callback.
+
+Write three callback functions:
+
+1) giveRaise - returns a new object with salary increased by 10% (round to nearest integer).
+2) getDepartment - returns "Engineering" if role includes "Developer" or "Engineer", "Management" if role includes "Manager" or "Director", "Other" otherwise.
+3) formatSummary - returns "Alex (Developer) - $75,000"
+*/
+
+/*
+const employees = [
+  { name: "Alex", role: "Frontend Developer", salary: 75000 },
+  { name: "Jamie", role: "Project Manager", salary: 82000 },
+  { name: "Taylor", role: "Backend Engineer", salary: 78000 },
+  { name: "Jordan", role: "UX Designer", salary: 68000 },
+  { name: "Casey", role: "Engineering Director", salary: 95000 },
+];
+
+const giveRaise = (employee) => {
+  const raise = employee.salary * 0.1;
+  return { ...employee, salary: Math.round(employee.salary + raise) };
+};
+
+const getDepartment = (employee) => {
+  if (employee.role.includes("Developer") || employee.role.includes("Engineer"))
+    return "Engineering";
+  if (employee.role.includes("Manager") || employee.role.includes("Director"))
+    return "Management";
+  return "Other";
+};
+
+const formatSummary = (employee) => {
+  return `${employee.name} (${employee.role}) - $${employee.salary}`;
+};
+
+const processEmployees = function (employees, callBack) {
+  const result = [];
+  for (const employee of employees) {
+    result.push(callBack(employee));
+  }
+  return result;
+};
+
+console.log(processEmployees(employees, giveRaise));
+console.log(processEmployees(employees, getDepartment));
+console.log(processEmployees(employees, formatSummary));
+*/
+
+//-----------------------------------------------------
+
+/*
+Challenge 4: Weather Data Analyzer 🌤️
+You're building a weather app. Write analyzeWeather that takes an array of daily weather data and a callback.
+
+Write three callback functions:
+
+toFahrenheit - converts Celsius to Fahrenheit (C * 9/5 + 32), returns rounded number
+
+weatherDescription - returns "☀️ Sunny" if temp > 25°C, "⛅ Cloudy" if 15-25°C, "❄️ Cold" if < 15°C
+
+formatDaily - returns "Monday: 22°C (⛅ Cloudy)"
+*/
+
+/*
+const weatherData = [
+  { day: "Monday", temp: 22, condition: "Cloudy" },
+  { day: "Tuesday", temp: 18, condition: "Rainy" },
+  { day: "Wednesday", temp: 30, condition: "Sunny" },
+  { day: "Thursday", temp: 12, condition: "Snowy" },
+  { day: "Friday", temp: 25, condition: "Clear" },
+];
+
+const toFahrenheit = (data) => {
+  return Math.round(data.temp * 1.8 + 32);
+};
+
+const weatherDescription = (data) => {
+  if (data.temp > 25) return `☀️ Sunny`;
+  if (data.temp >= 15 && data.temp < 25) return `⛅ Cloudy`;
+  return `❄️ Cold`;
+};
+
+const formatDaily = (data) => {
+  return `${data.day}: ${data.temp}°C - (${weatherDescription(data)})`;
+};
+
+const analyzeWeather = function (datas, callBack) {
+  const result = [];
+  for (const data of datas) {
+    result.push(callBack(data));
+  }
+  return result;
+};
+
+console.log(analyzeWeather(weatherData, toFahrenheit));
+console.log(analyzeWeather(weatherData, weatherDescription));
+console.log(analyzeWeather(weatherData, formatDaily));
+*/
+
+//-----------------------------------------------------
+
+/*
+// 🎯 THREE CALLBACKS TO WRITE:
+
+// 1. applyLateFee
+// - If book is checked out AND overdue (daysOverdue > 0):
+//   Return a new object with fee property added (fee = daysOverdue * 0.50)
+// - Otherwise return the original book with fee = 0
+// HINT: Use ...spread operator to create new object
+
+// 2. getAvailability  
+// - If checkedOut is false: return "Available"
+// - If checkedOut is true: return `Due on YYYY-MM-DD`
+// - If dueDate is null but checkedOut is false: return "Available"
+
+// 3. createCard
+// - Return a string like: "📖 '1984' by George Orwell - Due: 2026-08-15"
+// - If available: "📖 '1984' by George Orwell - Available"
+// HINT: Use getAvailability inside createCard!
+
+// 📝 PROCESSOR FUNCTION:
+const processBooks = function (books, callback) {
+  // Your loop here - remember to use the parameter!
+};
+
+// 🧪 TEST ALL THREE:
+console.log(processBooks(books, applyLateFee));
+console.log(processBooks(books, getAvailability));
+console.log(processBooks(books, createCard));
+*/
+
+const books = [
+  {
+    title: "1984",
+    author: "George Orwell",
+    checkedOut: true,
+    dueDate: "2026-08-15",
+  },
+  {
+    title: "Sapiens",
+    author: "Yuval Harari",
+    checkedOut: false,
+    dueDate: null,
+  },
+  {
+    title: "Dune",
+    author: "Frank Herbert",
+    checkedOut: true,
+    dueDate: "2026-07-20",
+  },
+  {
+    title: "Atomic Habits",
+    author: "James Clear",
+    checkedOut: true,
+    dueDate: "2026-08-01",
+  },
+  {
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    checkedOut: false,
+    dueDate: null,
+  },
+];
+
+const today = new Date(); // Get today's date & time
+
+const applyLateFee = (book) => {
+  const due = new Date(book.dueDate); // Convert dueDate string to Date object
+  const daysOverdue = Math.floor((today - due) / (1000 * 60 * 60 * 24));
+  if (book.checkedOut && daysOverdue > 0)
+    return { ...book, fee: daysOverdue * 0.5 };
+
+  return { ...book, fee: 0 };
+};
+
+const getAvailability = (book) => {
+  if (book.checkedOut === false) return "Available";
+  if (book.checkedOut === true) return `Due on ${book.dueDate}`;
+  if (!book.dueDate && book.checkedOut === false) return "Available";
+};
+// x
+console.log(
+  getAvailability({
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    checkedOut: false,
+    dueDate: null,
+  }),
+);
+
+const createCard = (book) => {
+  if (getAvailability(book))
+    return `📖 '${book.title}' by ${book.author} - Due: ${book.dueDate}`;
+};
+// - Return a string like: "📖 '1984' by George Orwell - Due: 2026-08-15"
+// - If available: "📖 '1984' by George Orwell - Available"
+// HINT: Use getAvailability inside createCard!
+
+// console.log(
+//   createCard({
+//     title: "1984",
+//     author: "George Orwell",
+//     checkedOut: true,
+//     dueDate: "2026-08-15",
+//   }),
+// );
+// console.log(
+//   createCard({
+//     title: "The Hobbit",
+//     author: "J.R.R. Tolkien",
+//     checkedOut: false,
+//     dueDate: null,
+//   }),
+// );
