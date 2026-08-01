@@ -2283,6 +2283,7 @@ const books = [
 const today = new Date(); // Get today's date & time
 
 const applyLateFee = (book) => {
+  // Guard clause: if not checked out or no due date, no fee
   if (!book.checkedOut || !book.dueDate) return { ...book, fee: "$0" };
 
   const due = new Date(book.dueDate); // Convert dueDate string to Date object
