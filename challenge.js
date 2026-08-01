@@ -2283,50 +2283,36 @@ const books = [
 const today = new Date(); // Get today's date & time
 
 const applyLateFee = (book) => {
+  if (!book.checkedOut || !book.dueDate) return { ...book, fee: "$0" };
+
   const due = new Date(book.dueDate); // Convert dueDate string to Date object
   const daysOverdue = Math.floor((today - due) / (1000 * 60 * 60 * 24));
-  if (book.checkedOut && daysOverdue > 0)
-    return { ...book, fee: daysOverdue * 0.5 };
+  if (daysOverdue > 0) return { ...book, fee: `$${daysOverdue * 0.5}` };
+  // if (daysOverdue > 0) {
+  //   return { ...book, fee: Number((daysOverdue * 0.50).toFixed(2)) };
+  // }
 
-  return { ...book, fee: 0 };
+  return { ...book, fee: "$0" };
 };
 
 const getAvailability = (book) => {
   if (book.checkedOut === false) return "Available";
   if (book.checkedOut === true) return `Due on ${book.dueDate}`;
-  if (!book.dueDate && book.checkedOut === false) return "Available";
 };
-// x
-console.log(
-  getAvailability({
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
-    checkedOut: false,
-    dueDate: null,
-  }),
-);
 
 const createCard = (book) => {
-  if (getAvailability(book))
-    return `📖 '${book.title}' by ${book.author} - Due: ${book.dueDate}`;
+  const availability = getAvailability(book);
+  return `📖 '${book.title}' by ${book.author} - ${availability}`;
 };
-// - Return a string like: "📖 '1984' by George Orwell - Due: 2026-08-15"
-// - If available: "📖 '1984' by George Orwell - Available"
-// HINT: Use getAvailability inside createCard!
 
-// console.log(
-//   createCard({
-//     title: "1984",
-//     author: "George Orwell",
-//     checkedOut: true,
-//     dueDate: "2026-08-15",
-//   }),
-// );
-// console.log(
-//   createCard({
-//     title: "The Hobbit",
-//     author: "J.R.R. Tolkien",
-//     checkedOut: false,
-//     dueDate: null,
-//   }),
-// );
+const processBooks = function (books, callback) {
+  const result = [];
+  for (const book of books) {
+    result.push(callback(book));
+  }
+  return result;
+};
+
+console.log(processBooks(books, applyLateFee));
+console.log(processBooks(books, getAvailability));
+console.log(processBooks(books, createCard));
