@@ -2349,6 +2349,7 @@ console.log(processBooks(books, createCard));
 
 // 5. Test all three with console.log()
 
+/*
 const deliveries = [
   {
     id: 101,
@@ -2427,3 +2428,315 @@ const processDeliveries = function (deliveries, callback) {
 console.log(processDeliveries(deliveries, calculateTotal));
 console.log(processDeliveries(deliveries, deliveryTime));
 console.log(processDeliveries(deliveries, formatReceipt));
+*/
+
+//-----------------------------------------------------------
+// Call Apply Bind
+
+/*
+Your tasks:
+
+- Use call to run car.describe for honda with color "red" and year 2020
+- Use apply to run car.describe for bmw with the same data stored in an array
+- Use bind to create a new function describeHonda that always uses honda as this — then call it with color "blue" and year 2022
+- Use bind with partial application to create describeBMW2023 that always uses bmw and always has year 2023 preset — then call it with just a color
+*/
+
+/*
+const car = {
+  brand: "Toyota",
+  describe: function (year, color) {
+    console.log(`${this.brand} - ${color} - ${year}`);
+  },
+};
+
+const honda = { brand: "Honda" };
+const bmw = { brand: "BMW" };
+
+const brand = car.describe;
+brand.call(honda, 2000, "red");
+
+const carDetail = [2000, "red"];
+brand.apply(bmw, carDetail);
+
+const describeHonda = brand.bind(honda);
+describeHonda(2022, "blue");
+
+const describeBMW2023 = brand.bind(bmw, 2023);
+describeBMW2023("grey");
+*/
+
+//----------------------------------------------------
+console.log("---------------------------------------------");
+
+/*
+// TASK: Create a function called 'aliceIntro' that uses bind
+// so it always returns Alice's introduction
+
+const user = {
+  name: "Alice",
+  age: 25,
+  introduce() {
+    return `Hi, I'm ${this.name} and I'm ${this.age} years old`;
+  },
+};
+
+const extraction = user.introduce;
+const aliceIntro = extraction.bind(user);
+
+console.log(aliceIntro()); 
+*/
+
+//----------------------------------------------------
+
+/*
+// TASK: Make the button work so clicking it increases
+// the counter object's count property
+
+const counter = {
+  count: 0,
+  increment() {
+    this.count++;
+    this.display();
+  },
+  display() {
+    console.log(`Count: ${this.count}`);
+  },
+};
+
+document
+  .querySelector("#click-btn")
+  .addEventListener("click", counter.increment.bind(counter));
+*/
+
+//----------------------------------------------------
+
+/*
+// When seconds reaches 0, log "Time's up!" and stop the
+// TASK: Use setInterval to count down every second
+
+const countdown = {
+  seconds: 10,
+  start() {
+    console.log(`Starting: ${this.seconds} seconds`);
+    const timer = setInterval(
+      function () {
+        this.seconds--;
+        if (this.seconds === 0) {
+          console.log("Time is up!");
+          clearInterval(timer);
+        } else {
+          console.log(this.seconds);
+        }
+      }.bind(this),
+      1000,
+    );
+  },
+};
+
+countdown.start();
+*/
+
+//----------------------------------------------------
+
+/*
+// TASK: Use call to make mathOperations.add work with calculator1
+// TASK: Use apply to make mathOperations.multiply work with calculator2
+
+const mathOperations = {
+  add(a, b) {
+    return a + b + this.extra;
+  },
+  multiply(a, b) {
+    return a * b * this.extra;
+  },
+};
+
+const calculator1 = { extra: 2 };
+const calculator2 = { extra: 3 };
+
+const result1 = mathOperations.add.call(calculator1, 5, 3);
+const result2 = mathOperations.multiply.apply(calculator2, [4, 2]);
+
+console.log(result1); // Should be: 5 + 3 + 2 = 10
+console.log(result2); // Should be: 4 * 2 * 3 = 24
+*/
+
+//----------------------------------------------------
+
+/*
+const shoppingCart = {
+  items: [],
+  total: 0,
+  addItem(name, price) {
+    this.items.push({ name, price });
+    this.total += price;
+    this.display();
+  },
+  display() {
+    console.log(`${this.items.length} items: $${this.total}`);
+  },
+};
+
+const johnCart = { items: [], total: 0, display: shoppingCart.display };
+const sarahCart = { items: [], total: 0, display: shoppingCart.display };
+
+shoppingCart.addItem.call(johnCart, "Laptop", 1000);
+shoppingCart.addItem.call(sarahCart, "Earpod", 300);
+shoppingCart.addItem.call(johnCart, "Mouse", 50);
+*/
+
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+/*
+// TASK: Create two separate form handlers:
+// 1. signupForm - for user registration
+// 2. loginForm - for user login
+// Both should work independently with their own data
+
+const formHandler = {
+  formData: {},
+  errors: [],
+
+  setField(field, value) {
+    if (this.validate(field, value)) {
+      this.formData[field] = value;
+      this.errors = this.errors.filter((e) => e.field !== field);
+    } else {
+      this.errors.push({ field, message: `Invalid ${field}` });
+    }
+    this.displayStatus();
+  },
+
+  validate(field, value) {
+    if (field === "email") return value.includes("@");
+    if (field === "password") return value.length >= 6;
+    return true;
+  },
+
+  displayStatus() {
+    const isValid = this.errors.length === 0;
+    console.log(`Form ${isValid ? "✅ VALID" : "❌ INVALID"}`);
+    console.log("Data:", this.formData);
+    console.log("Errors:", this.errors);
+    console.log("---");
+  },
+};
+
+// Your code here:
+
+signupForm.setField("email", "test"); // Invalid
+signupForm.setField("email", "test@test"); // Valid
+signupForm.setField("password", "123"); // Invalid
+signupForm.setField("password", "123456"); // Valid
+
+loginForm.setField("email", "user@site");
+loginForm.setField("password", "pass123");
+
+// Each form should maintain its own data and errors
+
+const company = {
+  name: "TechNova",
+  payroll: 850000,
+
+  processSalary(employee, bonus) {
+    this.payroll -= employee.salary + bonus;
+    employee.balance += employee.salary + bonus;
+
+    console.log(
+      `${employee.name} received ₦${employee.salary + bonus}. 
+      ${this.name} balance: ₦${this.payroll}`,
+    );
+  },
+};
+
+const employees = [
+  { name: "John", role: "Developer", salary: 250000, balance: 120000 },
+  { name: "Sarah", role: "Designer", salary: 180000, balance: 90000 },
+];
+
+company.processSalary.call(company, employees[0], 50000);
+company.processSalary.call(company, employees[1], 30000);
+*/
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+
+/*
+Coding Challenge #2
+This is more of a thinking challenge than a coding challenge �
+Your tasks:
+1. Take the IIFE below and at the end of the function, attach an event listener that 
+changes the color of the selected h1 element ('header') to blue, each time 
+the body element is clicked. Do not select the h1 element again!
+2. And now explain to yourself (or someone around you) why this worked! Take all 
+the time you need. Think about when exactly the callback function is executed, 
+and what that means for the variables involved in this example.
+*/
+
+/*
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+
+  document.querySelector("body").addEventListener("click", function () {
+    header.style.color = "blue";
+  });
+})();
+*/
+
+//--------------------------------------------------
+
+// WOORKING WITH ARRAYS
+/*
+Working With Arrays
+Coding Challenge #1
+Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners 
+about their dog's age, and stored the data into an array (one array for each). For 
+now, they are just interested in knowing whether a dog is an adult or a puppy.
+A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years 
+old.
+Your tasks:
+Create a function 'checkDogs', which accepts 2 arrays of dog's ages 
+('dogsJulia' and 'dogsKate'), and does the following things:
+1. Julia found out that the owners of the first and the last two dogs actually have 
+cats, not dogs! So create a shallow copy of Julia's array, and remove the cat 
+ages from that copied array (because it's a bad practice to mutate function 
+parameters)
+2. Create an array with both Julia's (corrected) and Kate's data
+3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 
+is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy 
+�
+")
+4. Run the function for both test datasets
+Test data:
+§ Data 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
+§ Data 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
+Hints: Use tools from all lectures in this section so far �
+GOOD LUCK 
+*/
+const juliaData1 = [3, 5, 2, 12, 7];
+const juliaData2 = [9, 16, 6, 8, 3];
+const kateData1 = [4, 1, 15, 8, 3];
+const kateData2 = [10, 5, 6, 1, 4];
+
+const checkDogs = (dogsJulia, dogsKate) => {
+  const updatedJulia = dogsJulia.slice(1, -2);
+  const jkData = [...updatedJulia, ...dogsKate];
+
+  jkData.forEach((e, i) => {
+    const comaprison = e < 3 ? "is a Puppy 🐶" : "is an Adult 🐕";
+    console.log(`Dog number ${i + 1} ${comaprison}, and is ${e} years old`);
+  });
+};
+checkDogs(juliaData1, kateData1);
+checkDogs(juliaData2, kateData2);
