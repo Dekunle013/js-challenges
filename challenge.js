@@ -2467,7 +2467,6 @@ describeBMW2023("grey");
 */
 
 //----------------------------------------------------
-console.log("---------------------------------------------");
 
 /*
 // TASK: Create a function called 'aliceIntro' that uses bind
@@ -3029,6 +3028,7 @@ HINT 1: Use many different tools to solve these challenges, you can use the summ
 HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
 */
 
+/*
 const dogs = [
   { weight: 22, curFood: 250, owners: ["Alice", "Bob"] },
   { weight: 8, curFood: 200, owners: ["Matilda"] },
@@ -3102,3 +3102,75 @@ console.log(groupedByOwners);
 // 10
 const dogsSorted = dogs.toSorted((a, b) => a.recFood - b.recFood);
 console.log(dogsSorted);
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// Object Oriented Programming (OOP)
+
+/*
+Coding Challenge #1
+Your tasks:
+1. Use a constructor function to implement a 'Car'. A car has a 'make' and a 
+'speed' property. The 'speed' property is the current speed of the car in 
+km/h
+2. Implement an 'accelerate' method that will increase the car's speed by 10, 
+and log the new speed to the console
+3. Implement a 'brake' method that will decrease the car's speed by 5, and log 
+the new speed to the console
+4. Create 2 'Car' objects and experiment with calling 'accelerate' and 
+'brake' multiple times on each of them
+Test data:
+§ Data car 1: 'BMW' going at 120 km/h
+§ Data car 2: 'Mercedes' going at 95 km/h
+*/
+
+/*
+// 1
+const Car = function (brand, speed) {
+  this.make = brand;
+  this.speed = speed;
+};
+
+const bmwCar = new Car("BMW", 120);
+const mercedesCar = new Car("Mercedes", 95);
+
+console.log(bmwCar);
+console.log(mercedesCar);
+
+// 2
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(
+    `${this.make} is running at ${this.speed}km/h: Increased by 10km/h`,
+  );
+};
+
+bmwCar.accelerate();
+mercedesCar.accelerate();
+
+// 3
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(
+    `${this.make} is running at ${this.speed}km/h: decreased by 5km/h`,
+  );
+};
+
+bmwCar.brake();
+mercedesCar.brake();
+
+// 4
+bmwCar.accelerate();
+bmwCar.accelerate();
+bmwCar.accelerate();
+bmwCar.brake();
+bmwCar.accelerate();
+mercedesCar.accelerate();
+mercedesCar.accelerate();
+mercedesCar.accelerate();
+mercedesCar.brake();
+mercedesCar.accelerate();
+*/
